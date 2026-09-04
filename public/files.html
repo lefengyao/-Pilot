@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>文件工作区</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="file-page">
+    <aside class="file-tree" id="file-tree" aria-label="工作区目录"></aside>
+    <section class="file-browser">
+      <header class="file-toolbar">
+        <button type="button" id="file-tree-toggle" class="file-tree-toggle">目录</button>
+        <button type="button" id="back-terminal" class="file-back">← 终端</button>
+        <div class="file-heading"><strong id="file-path">工作区</strong><span id="file-count">正在加载…</span></div>
+        <div class="file-actions"><button type="button" id="file-refresh">刷新</button><button type="button" id="file-upload">上传</button><button type="button" id="file-new-folder">新建文件夹</button></div>
+      </header>
+      <div class="file-drop" id="file-drop"><span>拖拽文件到这里，或点击选择文件</span><input id="file-input" type="file" multiple hidden></div>
+      <div class="file-content"><div class="file-list" id="file-list"></div><aside class="file-preview" id="file-preview"><div class="preview-empty">选择文件后在这里预览</div></aside></div>
+    </section>
+  </main>
+  <dialog id="file-operation-dialog">
+    <form id="file-operation-form">
+      <header><h1 id="file-operation-title">文件操作</h1><button type="button" id="file-operation-close" aria-label="关闭">×</button></header>
+      <p id="file-operation-message"></p>
+      <label id="file-operation-label">名称<input id="file-operation-name" name="name" maxlength="255" autocomplete="off"></label>
+      <footer><button type="button" id="file-operation-cancel">取消</button><button class="primary" id="file-operation-confirm" value="confirm">确认</button></footer>
+    </form>
+  </dialog>
+  <script src="/vendor/mammoth/mammoth.browser.min.js"></script>
+  <script src="/vendor/xlsx/xlsx.full.min.js"></script>
+  <script type="module" src="/file-workspace-page.js"></script>
+</body>
+</html>

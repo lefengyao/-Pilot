@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>LAN Terminal</title>
+  <link rel="stylesheet" href="/vendor/xterm/css/xterm.css">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="workspace">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span>&gt;_</span><div><strong>LAN Terminal</strong><small>Windows Host</small></div></div>
+      <button class="primary" id="show-create">＋ 新建终端</button>
+      <div class="view-switch"><button type="button" id="show-terminal" class="view-button active">终端</button><button type="button" id="show-files" class="view-button">文件</button></div>
+      <nav id="session-list" class="session-list" aria-label="终端会话"></nav>
+      <p class="warning">无认证模式：访问此地址的人将以服务器 Windows 账号执行命令。</p>
+    </aside>
+    <section class="terminal-area" id="terminal-area">
+      <header class="toolbar">
+        <button class="mobile-menu" id="toggle-sidebar" aria-label="显示终端会话">☰</button>
+        <div class="detail"><strong id="session-title">选择或新建终端</strong><span id="session-meta">未连接</span></div>
+        <div class="actions"><button id="reconnect">重新连接</button><button id="clear">清空显示</button><button id="restart">重启</button><button class="danger" id="stop">结束当前</button></div>
+      </header>
+      <div class="banner" id="connection-banner">正在连接服务…</div>
+      <div class="terminal-host" id="terminal-host"><div class="empty">从左侧新建一个 PowerShell 或 CMD 会话。</div></div>
+    </section>
+  </main>
+
+  <dialog id="create-dialog">
+    <form id="create-form">
+      <header><h1>新建终端</h1><button type="button" id="close-create" aria-label="关闭新建终端">×</button></header>
+      <label>终端类型<select name="shell"><option value="powershell">PowerShell</option><option value="cmd">CMD</option></select></label>
+      <label>会话名称（可选）<input name="label" maxlength="64" placeholder="例如：部署检查"></label>
+      <label>初始工作目录
+        <input type="hidden" name="cwd" value=".">
+        <div class="directory-field"><output id="selected-directory">允许目录</output><button type="button" id="choose-directory">选择目录</button></div>
+        <small>只能选择服务允许目录内的子目录。</small>
+      </label>
+      <div class="admin-access"><output id="admin-status">普通用户模式</output><button type="button" id="unlock-admin">管理员解锁</button></div>
+      <footer><button type="button" id="cancel-create">取消</button><button class="primary" value="create">创建并连接</button></footer>
+    </form>
+  </dialog>
+
+  <dialog id="admin-dialog">
+    <form id="admin-form">
+      <header><h1>管理员解锁</h1><button type="button" id="close-admin" aria-label="关闭管理员解锁">×</button></header>
+      <label>管理员密钥<input id="admin-key" type="password" autocomplete="off" required></label>
+      <p class="admin-error" id="admin-error" role="alert" hidden></p>
+      <footer><button type="button" id="cancel-admin">取消</button><button class="primary" id="confirm-admin" value="unlock">解锁</button></footer>
+    </form>
+  </dialog>
+
+  <dialog id="directory-dialog" class="directory-dialog">
+    <header><div><h1>选择初始工作目录</h1><p id="directory-path">允许目录</p></div><button type="button" id="close-directory" aria-label="关闭目录选择">×</button></header>
+    <p class="directory-error" id="directory-error" role="alert" hidden></p>
+    <div class="directory-list" id="directory-list" aria-label="子目录" aria-live="polite"></div>
+    <footer><button type="button" id="directory-up">上一级</button><span aria-hidden="true"></span><button type="button" id="cancel-directory">取消</button><button type="button" class="primary" id="confirm-directory">使用当前目录</button></footer>
+  </dialog>
+
+  <script src="/vendor/xterm/lib/xterm.js"></script>
+  <script src="/vendor/xterm-fit/lib/addon-fit.js"></script>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
