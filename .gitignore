@@ -14,6 +14,9 @@ terminal-workspace/*
 .codex/
 .superpowers/
 
+# Project documentation kept locally and excluded from the repository
+docs/
+
 # Logs, process files, and temporary output
 *.log
 *.pid
